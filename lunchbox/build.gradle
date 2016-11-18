@@ -1,0 +1,6 @@
+plugins {
+    id 'application'
+}
+
+mainClassName = "com.adamdubiel.workshop.metrics.LunchboxRunner"
+applicationDefaultJvmArgs = ['-mx256m', '-XX:+UseConcMarkSweepGC']

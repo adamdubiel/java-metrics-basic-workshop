@@ -1,48 +1,57 @@
 plugins {
     id 'java'
-    id 'groovy'
     id 'pl.allegro.tech.build.axion-release' version '1.4.1'
 }
 
 project.group = 'com.adamdubiel.workshop.metrics'
 project.version = scmVersion.version
 
-repositories {
-    mavenCentral()
-}
-
 project.ext.versions = [
-    springBoot: '1.4.1.RELEASE'
+        springBoot: '1.4.1.RELEASE'
 ]
 
-dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot, {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+
+    repositories {
+        mavenCentral()
     }
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-actuator', version: versions.springBoot
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: versions.springBoot
+    dependencies {
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot, {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        }
 
-    compile group: 'io.dropwizard.metrics', name: 'metrics-healthchecks', version: '3.1.2'
-    compile group: 'io.dropwizard.metrics', name: 'metrics-servlets', version: '3.1.2'
-    compile group: 'com.ryantenney.metrics', name: 'metrics-spring', version: '3.1.3'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
-    compile group: 'org.mpierce.metrics.reservoir', name: 'hdrhistogram-metrics-reservoir', version: '1.1.0'
+        compile group: 'org.springframework.boot', name: 'spring-boot-actuator', version: versions.springBoot
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: versions.springBoot
 
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.4.0.RELEASE'
+        compile group: 'io.dropwizard.metrics', name: 'metrics-core', version: '3.1.2'
+        compile group: 'io.dropwizard.metrics', name: 'metrics-graphite', version: '3.1.2'
+        compile group: 'io.dropwizard.metrics', name: 'metrics-healthchecks', version: '3.1.2'
+        compile group: 'io.dropwizard.metrics', name: 'metrics-servlets', version: '3.1.2'
+        compile group: 'com.ryantenney.metrics', name: 'metrics-spring', version: '3.1.3'
+        compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+        compile group: 'org.mpierce.metrics.reservoir', name: 'hdrhistogram-metrics-reservoir', version: '1.1.0'
 
-    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
-    testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.0-groovy-2.4'
-    testCompile group: 'cglib', name: 'cglib-nodep', version: '3.1'
+        compile group: 'org.jctools', name: 'jctools-core', version: '1.2.1'
 
-    testCompile group: 'com.jayway.awaitility', name: 'awaitility', version: '1.6.0'
-    testCompile group: 'com.jayway.awaitility', name: 'awaitility-groovy', version: '1.6.0'
-    testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '1.58'
-}
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.4.0.RELEASE'
 
-test {
-    testLogging {
-        exceptionFormat = 'full'
+        testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
+        testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.0-groovy-2.4'
+        testCompile group: 'cglib', name: 'cglib-nodep', version: '3.1'
+
+        testCompile group: 'com.jayway.awaitility', name: 'awaitility', version: '1.6.0'
+        testCompile group: 'com.jayway.awaitility', name: 'awaitility-groovy', version: '1.6.0'
+        testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '1.58'
+    }
+
+    test {
+        testLogging {
+            exceptionFormat = 'full'
+        }
     }
 }
 

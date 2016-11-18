@@ -1,1 +1,3 @@
 rootProject.name = 'java-metrics-basic-workshop'
+
+include 'lunchbox', 'solutions'
