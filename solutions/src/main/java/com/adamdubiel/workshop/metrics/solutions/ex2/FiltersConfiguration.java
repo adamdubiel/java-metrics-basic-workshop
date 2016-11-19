@@ -15,6 +15,6 @@ public class FiltersConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MetricsInterceptor(metricRegistry));
+//        registry.addInterceptor(new MetricsInterceptor(metricRegistry));
     }
 }
