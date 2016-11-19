@@ -1,18 +1,20 @@
 package com.adamdubiel.workshop.metrics.config;
 
+import com.codahale.metrics.MetricRegistry;
+import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
+import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
-
 @Configuration
-public class MetricsConfiguration {
+@EnableMetrics
+public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
-    @Configuration
-    static class MetricsReporterConfguration {
+    @Override
+    public MetricRegistry getMetricRegistry() {
+        return new MetricRegistry();
+    }
 
-        @PostConstruct
-        public void startConsoleReporter() {
-        }
-
+    @Override
+    public void configureReporters(MetricRegistry metricRegistry) {
     }
 }

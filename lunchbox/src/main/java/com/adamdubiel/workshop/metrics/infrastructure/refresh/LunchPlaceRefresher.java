@@ -1,7 +1,7 @@
-package com.adamdubiel.workshop.metrics.refresh;
+package com.adamdubiel.workshop.metrics.infrastructure.refresh;
 
 import com.adamdubiel.workshop.metrics.domain.LunchPlacesRepository;
-import com.adamdubiel.workshop.metrics.leader.LeaderLock;
+import com.adamdubiel.workshop.metrics.infrastructure.leader.LeaderLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

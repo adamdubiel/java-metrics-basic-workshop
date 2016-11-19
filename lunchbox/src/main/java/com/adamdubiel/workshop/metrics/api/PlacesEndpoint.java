@@ -38,12 +38,13 @@ public class PlacesEndpoint {
         return places;
     }
 
-    @RequestMapping(path = "/{lunchPlaceName}/upvote", method = RequestMethod.POST)
+    // never ever use GET to modify resources - this here is only to simplify traffic generation
+    @RequestMapping(path = "/{lunchPlaceName}/upvote", method = RequestMethod.GET)
     public void upvote(@PathVariable String lunchPlaceName) {
         voter.castVote(new Voter.Vote(lunchPlaceName, 1, Voter.VoteType.UPVOTE));
     }
 
-    @RequestMapping(path = "/{lunchPlaceName}/downvote", method = RequestMethod.POST)
+    @RequestMapping(path = "/{lunchPlaceName}/downvote", method = RequestMethod.GET)
     public void downvote(@PathVariable String lunchPlaceName) {
         voter.castVote(new Voter.Vote(lunchPlaceName, 1, Voter.VoteType.DOWNVOTE));
     }

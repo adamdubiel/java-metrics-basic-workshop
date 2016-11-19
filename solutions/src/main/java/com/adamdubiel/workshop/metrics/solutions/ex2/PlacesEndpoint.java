@@ -1,12 +1,12 @@
-package com.adamdubiel.workshop.metrics.solutions.ex1;
+package com.adamdubiel.workshop.metrics.solutions.ex2;
 
 import com.adamdubiel.workshop.metrics.domain.LunchPlace;
 import com.adamdubiel.workshop.metrics.domain.LunchPlacesService;
 import com.adamdubiel.workshop.metrics.domain.Voter;
 import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.Timer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.codahale.metrics.annotation.Counted;
+import com.codahale.metrics.annotation.Metered;
+import com.codahale.metrics.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,31 +23,27 @@ public class PlacesEndpoint {
 
     private final Voter voter;
 
-    private final MetricRegistry metricRegistry;
-
     @Autowired
     public PlacesEndpoint(LunchPlacesService lunchPlacesService, Voter voter, MetricRegistry metricRegistry) {
         this.lunchPlacesService = lunchPlacesService;
         this.voter = voter;
-        this.metricRegistry = metricRegistry;
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @Timed(name = "endpoint.list", absolute = true)
     public List<LunchPlace> list() {
-        try(Timer.Context c = metricRegistry.timer("endpoint.list").time()) {
-            return lunchPlacesService.list();
-        }
+        return lunchPlacesService.list();
     }
 
     @RequestMapping(path = "/{lunchPlaceName}/upvote", method = RequestMethod.GET)
+    @Counted(name = "endpoint.upvote", absolute = true)
     public void upvote(@PathVariable String lunchPlaceName) {
-        metricRegistry.counter("endpoint.upvote").inc();
         voter.castVote(new Voter.Vote(lunchPlaceName, 1, Voter.VoteType.UPVOTE));
     }
 
     @RequestMapping(path = "/{lunchPlaceName}/downvote", method = RequestMethod.GET)
+    @Metered(name = "endpoint.downvote", absolute = true)
     public void downvote(@PathVariable String lunchPlaceName) {
-        metricRegistry.meter("endpoint.downvote").mark();
         voter.castVote(new Voter.Vote(lunchPlaceName, 1, Voter.VoteType.DOWNVOTE));
     }
 }

@@ -1,4 +1,4 @@
-package com.adamdubiel.workshop.metrics;
+package com.adamdubiel.workshop.metrics.infrastructure;
 
 import com.adamdubiel.workshop.metrics.domain.LunchPlace;
 import com.adamdubiel.workshop.metrics.domain.LunchPlacesRepository;
@@ -19,7 +19,7 @@ public class InMemoryDelayingLunchPlacesRepository implements LunchPlacesReposit
 
     @Override
     public List<LunchPlace> list() {
-        DelayMaker.delay(100, 800);
+        DelayMaker.delay(20, 200);
         return repository.values()
                 .stream()
                 .sorted(Comparator.comparing(l -> l.getName()))
@@ -28,7 +28,7 @@ public class InMemoryDelayingLunchPlacesRepository implements LunchPlacesReposit
 
     @Override
     public void add(LunchPlace lunchPlace) {
-        DelayMaker.delay(50, 150);
+        DelayMaker.delay(10, 60);
         repository.computeIfAbsent(lunchPlace.getName(), (k) -> lunchPlace);
     }
 

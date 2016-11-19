@@ -1,6 +1,6 @@
-package com.adamdubiel.workshop.metrics.refresh;
+package com.adamdubiel.workshop.metrics.infrastructure.refresh;
 
-import com.adamdubiel.workshop.metrics.DelayMaker;
+import com.adamdubiel.workshop.metrics.infrastructure.DelayMaker;
 import com.adamdubiel.workshop.metrics.domain.LunchPlace;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.adamdubiel.workshop.metrics;
+package com.adamdubiel.workshop.metrics.infrastructure;
 
 import java.util.concurrent.ThreadLocalRandom;
 

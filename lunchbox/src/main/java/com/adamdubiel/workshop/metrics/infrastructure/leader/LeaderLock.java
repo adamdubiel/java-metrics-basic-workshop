@@ -1,4 +1,4 @@
-package com.adamdubiel.workshop.metrics.leader;
+package com.adamdubiel.workshop.metrics.infrastructure.leader;
 
 import org.springframework.stereotype.Component;
 

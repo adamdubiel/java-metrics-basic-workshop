@@ -2,32 +2,24 @@ package com.adamdubiel.workshop.metrics.solutions.ex1;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
+import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-public class MetricsConfiguration {
+@EnableMetrics
+public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
-    @Bean
-    public MetricRegistry metricRegistry() {
+    @Override
+    public MetricRegistry getMetricRegistry() {
         return new MetricRegistry();
     }
 
-    @Configuration
-    static class MetricsReporterConfguration {
-
-        @Autowired
-        MetricRegistry metricRegistry;
-
-        @PostConstruct
-        public void startConsoleReporter() {
-            ConsoleReporter reporter = ConsoleReporter.forRegistry(metricRegistry).build();
-            reporter.start(1, TimeUnit.MINUTES);
-        }
-
+    @Override
+    public void configureReporters(MetricRegistry metricRegistry) {
+        ConsoleReporter reporter = ConsoleReporter.forRegistry(metricRegistry).build();
+        reporter.start(10, TimeUnit.SECONDS);
     }
 }
